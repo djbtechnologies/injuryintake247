@@ -121,7 +121,7 @@ Value: YOUR-USERNAME.github.io
 ### Update Contact Information
 
 In `index.html`, find and replace:
-- `dario@injuryintake247.com` → Your actual email
+- `name@injuryintake247.com` → Your actual email
 - Add your phone number if desired
 
 ### Update Colors
