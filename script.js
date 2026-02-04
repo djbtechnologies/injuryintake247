@@ -114,16 +114,21 @@ const statObserver = new IntersectionObserver((entries) => {
             if (number) {
                 const text = number.textContent;
                 const value = parseInt(text.replace(/\D/g, ''));
-// Only animate if it's a normal number and NOT a fraction like 24/7
-if (!isNaN(value) && !text.includes('/')) {
-    number.dataset.suffix = text.replace(value, '');
-    number.textContent = '0' + number.dataset.suffix;
-    setTimeout(() => {
-        animateNumber(number, value);
-    }, 300);
-} else {
-    // If it has a slash, just keep the original text and don't animate
-    number.textContent = text;
+                
+                // Only animate if it's a normal number and NOT a fraction like 24/7
+                if (!isNaN(value) && !text.includes('/')) {
+                    // Extract the suffix (like %)
+                    const suffix = text.replace(/[0-9]/g, '');
+                    number.dataset.suffix = suffix;
+                    number.textContent = '0' + suffix;
+                    
+                    setTimeout(() => {
+                        animateNumber(number, value);
+                    }, 300);
+                } else {
+                    // Keep "24/7" static as originally written in HTML
+                    number.textContent = text;
+                }
 }
                 }
             }
