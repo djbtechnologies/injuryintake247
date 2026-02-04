@@ -114,12 +114,17 @@ const statObserver = new IntersectionObserver((entries) => {
             if (number) {
                 const text = number.textContent;
                 const value = parseInt(text.replace(/\D/g, ''));
-                if (!isNaN(value)) {
-                    number.dataset.suffix = text.replace(value, '');
-                    number.textContent = '0' + number.dataset.suffix;
-                    setTimeout(() => {
-                        animateNumber(number, value);
-                    }, 300);
+// Only animate if it's a normal number and NOT a fraction like 24/7
+if (!isNaN(value) && !text.includes('/')) {
+    number.dataset.suffix = text.replace(value, '');
+    number.textContent = '0' + number.dataset.suffix;
+    setTimeout(() => {
+        animateNumber(number, value);
+    }, 300);
+} else {
+    // If it has a slash, just keep the original text and don't animate
+    number.textContent = text;
+}
                 }
             }
         }
