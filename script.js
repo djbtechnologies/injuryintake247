@@ -113,6 +113,12 @@ const statObserver = new IntersectionObserver((entries) => {
             const number = entry.target.querySelector('.stat-number');
             if (number) {
                 const text = number.textContent;
+                
+                // Skip animation for "24/7" stat
+                if (text.includes('24/7')) {
+                    return;
+                }
+                
                 const value = parseInt(text.replace(/\D/g, ''));
                 if (!isNaN(value)) {
                     number.dataset.suffix = text.replace(value, '');
@@ -126,3 +132,6 @@ const statObserver = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.5 });
 
+document.querySelectorAll('.stat').forEach(stat => {
+    statObserver.observe(stat);
+});
