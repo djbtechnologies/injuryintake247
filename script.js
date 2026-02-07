@@ -105,4 +105,24 @@ function animateNumber(element, target, duration = 2000) {
     }, 16);
 }
 
-;
+// Observe stat numbers
+const statObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+            entry.target.classList.add('animated');
+            const number = entry.target.querySelector('.stat-number');
+            if (number) {
+                const text = number.textContent;
+                const value = parseInt(text.replace(/\D/g, ''));
+                if (!isNaN(value)) {
+                    number.dataset.suffix = text.replace(value, '');
+                    number.textContent = '0' + number.dataset.suffix;
+                    setTimeout(() => {
+                        animateNumber(number, value);
+                    }, 300);
+                }
+            }
+        }
+    });
+}, { threshold: 0.5 });
+
